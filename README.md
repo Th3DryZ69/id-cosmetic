@@ -1,3 +1,1 @@
-# Anime-vue
-# id-cosmetics
-# id-cosmetics
+https://id-cosmetic.netlify.app/
