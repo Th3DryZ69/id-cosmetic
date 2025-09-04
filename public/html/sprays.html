@@ -21,7 +21,7 @@
                 <li><a href="./gliders.html">Gliders</a></li>
                 <li><a href="./trails.html">Trails</a></li>
                 <li><a href="./wraps.html">Wraps</a></li>
-                <li><a href="#" style="color: #ec7519">Emotes</a></li>
+                <li><a href="#" style="color: #ffffff">Emotes</a></li>
                 <li><a href="./loadingscreens.html">Others</a></li>
             </ul>
         </nav>
@@ -29,10 +29,17 @@
             <ul>
                 <li><a href="./dances.html">Dances</a></li>
                 <li><a href="./emojis.html">Emojis</a></li>
-                <li><a href="#" style="color: #ec7519">Sprays</a></li>
+                <li><a href="#" style="color: #ffffff">Sprays</a></li>
                 <li><a href="./toys.html">Toys</a></li>
             </ul>
         </div>
+
+        <!-- Search Bar -->
+        <div style="text-align: center; margin: 20px;">
+            <input type="text" id="searchInput" placeholder="Search Sprays..." onkeyup="searchTable()">
+        </div>
+        <p id="noResults" style="text-align: center; color: red; display: none;">No matching sprays found.</p>
+
     </header>
 
     <main>
@@ -47,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody id="Sprays">
-                    
+                    <!-- Data will be loaded here dynamically -->
                 </tbody>
             </table>
         </section>
@@ -59,6 +66,33 @@
 
     <script src="https://kit.fontawesome.com/1d1c3ac163.js" crossorigin="anonymous"></script>
     <script src="../js/sprays.js" type="module"></script>
-</body>
 
+    <!-- Fixed Search Script -->
+    <script>
+    function searchTable() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let rows = document.querySelectorAll("#Sprays tr");
+        let found = false;
+
+        rows.forEach(row => {
+            let nameCell = row.querySelector("td:nth-child(2)"); // Name column
+            if (nameCell) {
+                let name = nameCell.textContent.toLowerCase();
+                if (name.includes(input)) {
+                    row.style.display = ""; // Show row
+                    row.style.background = "yellow"; // Highlight match
+                    found = true;
+                } else {
+                    row.style.display = "none"; // Hide row
+                    row.style.background = ""; // Remove highlight
+                }
+            }
+        });
+
+        // Show "No Results Found" message if no matches
+        document.getElementById("noResults").style.display = found ? "none" : "block";
+    }
+    </script>
+
+</body>
 </html>

@@ -18,13 +18,20 @@
                 <li><a href="../../index.html">Skins</a></li>
                 <li><a href="./backpacks.html">Backpacks</a></li>
                 <li><a href="./pickaxes.html">Pickaxes</a></li>
-                <li><a href="#" style="color: #ec7519">Gliders</a></li>
+                <li><a href="#" style="color: #ffffff">Gliders</a></li>
                 <li><a href="./trails.html">Trails</a></li>
                 <li><a href="./wraps.html">Wraps</a></li>
                 <li><a href="./dances.html">Emotes</a></li>
                 <li><a href="./loadingscreens.html">Others</a></li>
             </ul>
         </nav>
+
+        <!-- Search Bar -->
+        <div style="text-align: center; margin: 20px;">
+            <input type="text" id="searchInput" placeholder="Search Gliders..." onkeyup="searchTable()">
+        </div>
+        <p id="noResults" style="text-align: center; color: red; display: none;">No matching gliders found.</p>
+
     </header>
 
     <main>
@@ -39,7 +46,7 @@
                     </tr>
                 </thead>
                 <tbody id="Gliders">
-                    
+                    <!-- Data will be loaded here dynamically -->
                 </tbody>
             </table>
         </section>
@@ -51,6 +58,33 @@
 
     <script src="https://kit.fontawesome.com/1d1c3ac163.js" crossorigin="anonymous"></script>
     <script src="../js/gliders.js" type="module"></script>
-</body>
 
+    <!-- Fixed Search Script -->
+    <script>
+    function searchTable() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let rows = document.querySelectorAll("#Gliders tr");
+        let found = false;
+
+        rows.forEach(row => {
+            let nameCell = row.querySelector("td:nth-child(2)"); // Name column
+            if (nameCell) {
+                let name = nameCell.textContent.toLowerCase();
+                if (name.includes(input)) {
+                    row.style.display = ""; // Show row
+                    row.style.background = "yellow"; // Highlight match
+                    found = true;
+                } else {
+                    row.style.display = "none"; // Hide row
+                    row.style.background = ""; // Remove highlight
+                }
+            }
+        });
+
+        // Show "No Results Found" message if no matches
+        document.getElementById("noResults").style.display = found ? "none" : "block";
+    }
+    </script>
+
+</body>
 </html>

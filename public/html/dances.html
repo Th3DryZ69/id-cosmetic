@@ -5,14 +5,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
     <title>Id Cosmetic / Dances</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Up Button Styling */
+        #upButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #444;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 50%;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            z-index: 1000;
+            display: none;
+        }
+
+        #upButton:hover {
+            background-color: #222;
+        }
+    </style>
 </head>
 
 <body>
     <header>
         <span id="top"></span>
-        <a href="#top"><i class="fa-solid fa-arrow-up"></i></a>
         <nav>
             <ul>
                 <li><a href="../../index.html">Skins</a></li>
@@ -21,19 +46,28 @@
                 <li><a href="./gliders.html">Gliders</a></li>
                 <li><a href="./trails.html">Trails</a></li>
                 <li><a href="./wraps.html">Wraps</a></li>
-                <li><a href="#" style="color: #ec7519">Emotes</a></li>
+                <li><a href="#" style="color: #ffffff">Emotes</a></li>
                 <li><a href="./loadingscreens.html">Others</a></li>
             </ul>
         </nav>
         <div>
             <ul>
-                <li><a href="#" style="color: #ec7519">Dances</a></li>
+                <li><a href="#" style="color: #ffffff">Dances</a></li>
                 <li><a href="./emojis.html">Emojis</a></li>
                 <li><a href="./sprays.html">Sprays</a></li>
                 <li><a href="./toys.html">Toys</a></li>
             </ul>
         </div>
+
+        <!-- Search Bar -->
+        <div style="text-align: center; margin: 20px;">
+            <input type="text" id="searchInput" placeholder="Search Dances..." onkeyup="searchTable()">
+        </div>
+        <p id="noResults" style="text-align: center; color: red; display: none;">No matching dances found.</p>
     </header>
+
+    <!-- Up Button -->
+    <a href="#top" id="upButton"><i class="fa-solid fa-arrow-up"></i></a>
 
     <main>
         <section>
@@ -47,7 +81,7 @@
                     </tr>
                 </thead>
                 <tbody id="Dances">
-                    
+                    <!-- Content will be dynamically populated here -->
                 </tbody>
             </table>
         </section>
@@ -59,6 +93,38 @@
 
     <script src="https://kit.fontawesome.com/1d1c3ac163.js" crossorigin="anonymous"></script>
     <script src="../js/dances.js" type="module"></script>
-</body>
 
+    <!-- Search and Scroll Script -->
+    <script>
+        function searchTable() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const rows = document.querySelectorAll("#Dances tr");
+            let found = false;
+
+            rows.forEach(row => {
+                const nameCell = row.querySelector("td:nth-child(2)");
+                if (nameCell) {
+                    const name = nameCell.textContent.toLowerCase();
+                    if (name.includes(input)) {
+                        row.style.display = "";
+                        row.style.background = "yellow";
+                        found = true;
+                    } else {
+                        row.style.display = "none";
+                        row.style.background = "";
+                    }
+                }
+            });
+
+            document.getElementById("noResults").style.display = found ? "none" : "block";
+        }
+
+        // Show/hide the up button
+        window.addEventListener("scroll", () => {
+            const upButton = document.getElementById("upButton");
+            upButton.style.display = window.scrollY > 200 ? "block" : "none";
+        });
+    </script>
+
+</body>
 </html>

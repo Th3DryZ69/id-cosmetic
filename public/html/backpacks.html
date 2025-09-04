@@ -5,18 +5,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
     <title>Id Cosmetic / Backpacks</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Up Button Styling */
+        a[href="#top"] {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #444;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 50%;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            z-index: 1000;
+            display: none; /* Hidden by default */
+        }
+
+        a[href="#top"]:hover {
+            background-color: #222;
+        }
+    </style>
 </head>
 
 <body>
     <header>
         <span id="top"></span>
-        <a href="#top"><i class="fa-solid fa-arrow-up"></i></a>
         <nav>
             <ul>
                 <li><a href="../../index.html">Skins</a></li>
-                <li><a href="#" style="color: #ec7519">Backpacks</a></li>
+                <li><a href="#" style="color: #ffffff">Backpacks</a></li>
                 <li><a href="./pickaxes.html">Pickaxes</a></li>
                 <li><a href="./gliders.html">Gliders</a></li>
                 <li><a href="./trails.html">Trails</a></li>
@@ -25,7 +51,16 @@
                 <li><a href="./loadingscreens.html">Others</a></li>
             </ul>
         </nav>
+
+        <!-- Search Bar -->
+        <div style="text-align: center; margin: 20px;">
+            <input type="text" id="searchInput" placeholder="Search for a backpack..." onkeyup="searchTable()">
+        </div>
+        <p id="noResults" style="text-align: center; color: red; display: none;">No matching backpacks found.</p>
     </header>
+
+    <!-- Up Button -->
+    <a href="#top" id="upButton"><i class="fa-solid fa-arrow-up"></i></a>
 
     <main>
         <section>
@@ -39,7 +74,7 @@
                     </tr>
                 </thead>
                 <tbody id="Backpacks">
-                    
+                    <!-- Content will be dynamically populated here -->
                 </tbody>
             </table>
         </section>
@@ -51,6 +86,42 @@
 
     <script src="https://kit.fontawesome.com/1d1c3ac163.js" crossorigin="anonymous"></script>
     <script src="../js/backpacks.js" type="module"></script>
-</body>
 
+    <!-- Search and Scroll Scripts -->
+    <script>
+        function searchTable() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let rows = document.querySelectorAll("#Backpacks tr");
+            let found = false;
+
+            rows.forEach(row => {
+                let nameCell = row.querySelector("td:nth-child(2)");
+                if (nameCell) {
+                    let name = nameCell.textContent.toLowerCase();
+                    if (name.includes(input)) {
+                        row.style.display = "";
+                        row.style.background = "yellow";
+                        found = true;
+                    } else {
+                        row.style.display = "none";
+                        row.style.background = "";
+                    }
+                }
+            });
+
+            document.getElementById("noResults").style.display = found ? "none" : "block";
+        }
+
+        // Show/hide the up button on scroll
+        window.addEventListener("scroll", function () {
+            const upButton = document.getElementById("upButton");
+            if (window.scrollY > 200) {
+                upButton.style.display = "block";
+            } else {
+                upButton.style.display = "none";
+            }
+        });
+    </script>
+
+</body>
 </html>
